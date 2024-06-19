@@ -5,21 +5,22 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "-misc-jetbrainsmono nf-medium-r-normal--17-120-100-100-p-0-*-*", "-misc-symbols nerd font-medium-r-normal--0-0-0-0-p-0-iso10646-1" };
-static const char dmenufont[]       = "-*-jetbrainsmono nf-medium-r-normal--0-0-0-0-p-0-*-*";
-static const char col_gray1[]       = "#0b0e14";
-static const char col_gray2[]       = "#aad94c";
-static const char col_gray3[]       = "#39bae6";
-static const char col_gray4[]       = "#ffb454";
-static const char col_cyan[]        = "#131721";
+static const char *fonts[]          = { "-misc-jetbrainsmono nf semibold-semibold-r-normal--*-*-*-*-*-*-*-*", "-misc-symbols nerd font-medium-r-normal--0-0-0-0-p-0-iso10646-1" };
+static const char dmenufont[]       = "-misc-jetbrainsmono nf semibold-semibold-r-normal--*-*-*-*-*-*-*-*";
+static const char col_bg[]       = "#040200";
+static const char col_lightgreen[]       = "#4ecc28";
+static const char col_skyblue[]       = "#286fcc";
+static const char col_orange[]       = "#cc4328";
+static const char col_fg[]          = "#bfbdb6";
+static const char col_bg2[]        = "#161412";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeNorm] = { col_fg, col_bg2, col_bg },
+	[SchemeSel]  = { col_orange, col_bg,  col_fg  },
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tags[] = { "󰎤", "󰎧", "󰎪", "󰎭", "󰎱", "󰎳", "󰎶", "󰎹", "󰎼" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -29,6 +30,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "intellij-idea-ultimate-edition",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
@@ -57,13 +59,17 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_fg, "-sb", col_bg2, "-sf", col_orange, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
+static const char *intellij[]  = { "intellij-idea-ultimate-edition", NULL };
+static const char *browser[]  = { "firefox", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_i,      spawn,          {.v = intellij } },
+	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = browser } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
